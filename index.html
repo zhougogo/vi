@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Video27</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=640,user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+	</head>
+
+	<body onload="load()">
+		<div id="load">
+			<h1>正在加载。。。</h1>
+			<button>加载完毕，点我</button>
+		</div>
+		<div class="page page1 hidden">
+			<video webkit-playsinline playsinline x5-video-player-type="h5" preload='auto' loop autoplay x-webkit-airplay="true" id="video" width="1" height="1">
+				<source src="video/1.mp4" type="video/mp4">
+			</video>
+			<!-- <canvas id='canvas'></canvas> -->
+		</div>
+		<h1 class="h1 hidden">asdasd</h1>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+			function load() {
+				$('button').show();
+			}
+
+			var video = $('#video');
+			var ua = navigator.userAgent;
+
+			$('button').click(function() {
+				video[0].play();
+				$('.page1').show().siblings().hide();
+				$('.h1').show();
+			});
+			// //自动播放
+			video[0].play();
+			document.addEventListener("WeixinJSBridgeReady", function() {
+				console.log('WeixinJSBridgeReady')
+				if(ua.indexOf("iPhone") > 0) {
+					console.log('iPhone')
+					video[0].play();
+				} else if(ua.indexOf("Android") > 0) {
+					video[0].play();
+					if(video[0].currentTime) {
+						video[0].pause();
+						//这里的定时器你可以不需要，也可以变成你需要的事件，而且也不一定在这个位置，主要是里面的play
+						setTimeout(function() {
+							video[0].play();
+						}, 3000)
+					}
+				}
+
+			}, false);
+
+
+			// //用canvas阻止全屏播放
+			// var videoW = $('.page1').width();
+			// var videoH = $('.page1').height();
+
+			// var canvas = $('#canvas')[0];
+			// canvas.width = videoW;
+			// canvas.height = videoH;
+			// var ctx = canvas.getContext('2d');
+
+			// var videoTimer = null;
+
+			// video[0].addEventListener('play',function(){
+			// 	videoTimer = setInterval(function(){
+			// 		ctx.drawImage(video[0],0,0,videoW,videoH);
+			// 	},20);
+			// },false);
+
+			// video[0].addEventListener('pause',function(){
+			// 	clearInterval(videoTimer);
+			// },false);
+
+			// video[0].addEventListener('ended',function(){
+			// 	clearInterval(videoTimer);
+			// },false);
+		</script>
+	</body>
+
+</html>
